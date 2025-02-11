@@ -589,11 +589,14 @@ const Page = () => {
                 }-line text-2xl`}
               ></i>
             </button>
-            <h1
-              className={`font-semibold hidden md:block text-[#c69326] px-2.5 font-mono text-xl`}
-            >
-              Zenos AI
-            </h1>
+            <div className="flex items-center">
+              <img src="/logo.png" alt="Delta Vision Logo" className="sm:h-9 sm:w-9 xss:h-4 xss:w-5 rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm" />
+              <h1
+                className={`font-semibold hidden md:block  px-2.5 font-inter text-xl`}
+              >
+                Delta Vision
+              </h1>
+            </div>
           </div>
           <button
             onClick={() => newChat()}

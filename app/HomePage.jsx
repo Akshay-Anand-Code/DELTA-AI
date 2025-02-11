@@ -445,9 +445,9 @@ export function HomePage() {
           <Footer />
           <p
             className="text-center font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 dark:from-neutral-950 to-neutral-200 dark:to-neutral-800 w-full overflow-hidden whitespace-nowrap"
-            style={{ fontSize: "min(17vw)" }}
+            style={{ fontSize: "min(10vw)" }}
           >
-            ZENOS AI
+            DELTA VISION
           </p>
         </div>
         <Particles
