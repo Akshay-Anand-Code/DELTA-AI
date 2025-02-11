@@ -10,7 +10,7 @@ const Footer = () => {
             Zenos AI
           </h2>
         </div>
-        <p className="text-sm mt-4 font-inter text-[#e9e9e9]">
+        {/* <p className="text-sm mt-4 font-inter text-[#e9e9e9]">
           Made by{" "}
           <a
             target="_blank"
@@ -20,7 +20,7 @@ const Footer = () => {
             Siddharth Meena
           </a>{" "}
           ❤️
-        </p>
+        </p> */}
       </div>
       <div className="flex xss:justify-center sm:justify-start items-center space-x-3 text-sm">
         <a href="mailto:siddz.dev@gmail.com" className="ri-at-line sm:text-[2.2rem] xss:text-[2rem] text-black dark:text-white transition-all duration-300 ease-in-out hover:scale-110 cursor-pointer"></a>
