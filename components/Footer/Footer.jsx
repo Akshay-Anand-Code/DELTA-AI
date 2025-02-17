@@ -24,9 +24,9 @@ const Footer = () => {
         </p> */}
       </div>
       <div className="flex xss:justify-center sm:justify-start items-center space-x-3 text-sm">
-        <a href="mailto:siddz.dev@gmail.com" className="ri-at-line sm:text-[2.2rem] xss:text-[2rem] text-black dark:text-white transition-all duration-300 ease-in-out hover:scale-110 cursor-pointer"></a>
-        <a href="https://discord.com/users/273352781442842624" className="ri-discord-fill sm:text-[2.2rem] xss:text-[2rem] text-black dark:text-white transition-all duration-300 ease-in-out hover:scale-110 cursor-pointer"></a>
-        <a href="https://github.com/SiddDevZ" className="ri-github-fill sm:text-[2.2rem] xss:text-[2rem] text-black dark:text-white transition-all duration-300 ease-in-out hover:scale-110 cursor-pointer"></a>
+        <a href="https://twitter.com/YourTwitterHandle" target="_blank" rel="noopener noreferrer" className="ri-twitter-fill sm:text-[2.2rem] xss:text-[2rem] text-black dark:text-white transition-all duration-300 ease-in-out hover:scale-110 cursor-pointer"></a>
+        <a href="mailto:your.email@example.com" className="ri-mail-line sm:text-[2.2rem] xss:text-[2rem] text-black dark:text-white transition-all duration-300 ease-in-out hover:scale-110 cursor-pointer"></a>
+        <a href="https://t.me/YourTelegramUsername" target="_blank" rel="noopener noreferrer" className="ri-telegram-fill sm:text-[2.2rem] xss:text-[2rem] text-black dark:text-white transition-all duration-300 ease-in-out hover:scale-110 cursor-pointer"></a>
       </div>
     </div>
   );
