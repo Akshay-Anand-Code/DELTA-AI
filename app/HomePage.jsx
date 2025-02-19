@@ -10,11 +10,6 @@ import ShinyText from "../components/ShinyText/ShinyText";
 import { BorderBeam } from "../components/ui/border-beam";
 // import FlickeringGrid from "../components/ui/flickering-grid";
 import dynamic from "next/dynamic";
-
-const Particles = dynamic(() => import("../components/ui/particles"), {
-  ssr: false,
-  loading: () => <div></div>,
-});
 import Reviews from "../components/Reviews/Reviews";
 import Lottie from "lottie-react";
 import light from "../public/car.json";
@@ -32,6 +27,11 @@ const BackgroundBeams = dynamic(
   }
 );
 const MorphingText = dynamic(() => import("../components/ui/morphing-text"), {
+  ssr: false,
+  loading: () => <div></div>,
+});
+import LogoScroll from "../components/LogoScroll/LogoScroll";
+const Particles = dynamic(() => import("../components/ui/particles"), {
   ssr: false,
   loading: () => <div></div>,
 });
@@ -234,7 +234,7 @@ export function HomePage() {
               </Link>
             </div>
 
-            <div className="relative hero-animate hero-animate-delay-1 relativee back my-32 flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg border-2 bg-background">
+            <div className="relative hero-animate hero-animate-delay-1 relativee back my-16 flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg border-2 bg-background">
               <img
                 src="https://i.imgur.com/OmNuaFU.png"
                 alt="Background"
@@ -249,47 +249,13 @@ export function HomePage() {
               />
             </div>
           </div>
-          <div className="flex flex-col mt-[2rem]">
-            <h4
-              ref={headerRef}
-              className="text-[#46464c] font-inter font-semibold sm:text-base xss:text-sm text-center"
-            >
-              ALL THE MODELS YOU WILL EVER NEED
-            </h4>
-            <div className="flex justify-center">
-              <div
-                ref={gridRef}
-                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5 p-4 place-items-center"
-              >
-                <div className="flex items-center space-x-3 h-10">
-                  <img src="openai.svg" className="w-6 h-6 invert" alt="" />
-                  <span className="text-lg font-medium">ChatGPT 4.0</span>
-                </div>
-                <div className="flex items-center space-x-3 h-10">
-                  <span className="text-lg">FLUX 1.1</span>
-                </div>
-                <div className="flex items-center space-x-3 h-10">
-                  <img src="claude.svg" className="w-6 h-6 invert" alt="" />
-                  <span className="text-lg font-medium">Claude 3.5</span>
-                </div>
-                <div className="flex items-center space-x-3 h-10">
-                  <span className="text-lg font-medium">MidJourney</span>
-                </div>
-                <div className="flex items-center space-x-3 h-10">
-                  <img src="meta.svg" className="w-6 h-6" alt="" />
-                  <span className="text-lg font-medium">LLaMA</span>
-                </div>
-                <div className="flex items-center space-x-3 h-10">
-                  <img src="openai.svg" className="w-6 h-6 invert" alt="" />
-                  <span className="text-lg font-medium">o1-preview</span>
-                </div>
-              </div>
-            </div>
+          <div className="flex flex-col mt-16">
+            <LogoScroll />
           </div>
 
           <div
             ref={featuresRef}
-            className="flex justify-center mt-[1rem] z-50 overflow-hidden"
+            className="flex justify-center mt-16 z-50 overflow-hidden"
           >
             <div className="absolute flex justify-center pt-[4rem] w-full h-full overflow-hidden">
               <div
@@ -316,6 +282,21 @@ export function HomePage() {
                 your next big idea for you.
               </h4>
               <div className="border-[3px] flex border-dotted mt-14 relative z-10 flex-wrap">
+                <div className="md:w-[100%] xss:w-[100%] min-w-[310px] px-8 py-8 border-b border-[#ffffff20] h-[43rem] flex flex-col">
+                  <h2 className="font-inter text-2xl font-medium">
+                    Generate 3D Models with Text
+                  </h2>
+                  <h4 className="font-inter font-medium text-[#cccccc] sm:text-sm xss:text-sm sm:w-[90%] mt-3 xss:w-[96%] relative z-10">
+                    Create stunning 3D models from text descriptions using advanced AI. Perfect for game assets, product visualization, and architectural concepts.
+                  </h4>
+                  <div className="flex-grow flex justify-center items-center overflow-hidden mt-4">
+                    <img
+                      src="3d.png"
+                      className="opacity-75 object-contain fade-effect max-w-full max-h-full"
+                      alt="3D model generation example"
+                    />
+                  </div>
+                </div>
                 <div className="md:w-[55%] xss:w-[100%] min-w-[310px] px-8 py-8 border-b md:border-r border-[#ffffff20] h-[43rem] flex flex-col">
                   <h2 className="font-inter text-2xl font-medium">
                     Generate images with text
@@ -389,7 +370,7 @@ export function HomePage() {
           </div>
           <div
             ref={sectionRef}
-            className="flex flex-col w-[100%] mt-[12.5rem] relative"
+            className="flex flex-col w-[100%] mt-16 relative"
           >
             <h2 className="text-center font-inter font-medium text-[#ffffff] sm:text-5xl xs:text-4xl xss:text-4xl leading-10 relative xs:w-full xss:w-[97%] z-10">
               Loved by people around the world
@@ -403,7 +384,7 @@ export function HomePage() {
 
           <div
             ref={faqRef}
-            className="flex flex-col w-[100%] mt-[8.5rem] relative"
+            className="flex flex-col w-[100%] mt-16 relative"
           >
             <h2 className="text-center font-inter font-medium text-[#ffffff] sm:text-5xl xs:text-4xl xss:text-4xl leading-10 relative xs:w-full xss:w-[97%] z-10">
               Frequently asked questions
@@ -414,7 +395,7 @@ export function HomePage() {
             <Questions />
           </div>
 
-          <div className="relative w-[90%] mx-auto h-[25rem] mt-[5rem] rounded-lg bg-background overflow-hidden border">
+          <div className="relative w-[90%] mx-auto h-[25rem] mt-16 rounded-lg bg-background overflow-hidden border">
             <BackgroundBeams />
             {/* <FlickeringGrid
               className="z-0 absolute inset-0 size-full"
@@ -432,7 +413,7 @@ export function HomePage() {
                 Join us now!
               </h3>
               <p className="text-center mb-5 z-10 font-inter font-medium text-[#cccccc] w-[80%] mt-3">
-                Don’t miss out on the chance to access cutting-edge AI tools for
+                Don't miss out on the chance to access cutting-edge AI tools for
                 free. From generating stunning visuals to crafting compelling
                 text, everything you need is just a click away.
               </p>
@@ -447,7 +428,7 @@ export function HomePage() {
             className="text-center font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 dark:from-neutral-950 to-neutral-200 dark:to-neutral-800 w-full overflow-hidden whitespace-nowrap"
             style={{ fontSize: "min(10vw)" }}
           >
-            DELTA VISION
+           CHASKA
           </p>
         </div>
         <Particles
