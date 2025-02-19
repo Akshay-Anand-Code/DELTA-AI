@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import styles from './LogoScroll.module.css';
 
 const LogoScroll = () => {
   const logos = [
@@ -13,6 +14,16 @@ const LogoScroll = () => {
 
   // Duplicate the logos array multiple times to ensure smooth scrolling
   const duplicatedLogos = [...logos, ...logos, ...logos];
+
+  useEffect(() => {
+    const styleElement = document.createElement('style');
+    styleElement.innerHTML = styles;
+    document.head.appendChild(styleElement);
+
+    return () => {
+      styleElement.remove();
+    };
+  }, []);
 
   return (
     <div className="relative w-full py-4">
@@ -68,32 +79,5 @@ const LogoScroll = () => {
     </div>
   );
 };
-
-// Add this CSS to your globals.css or create a new style block
-const styles = `
-  .mask-edges {
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 20%,
-      black 80%,
-      transparent
-    );
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 20%,
-      black 80%,
-      transparent
-    );
-  }
-`;
-
-// Add styles to the document
-if (typeof document !== 'undefined') {
-  const styleElement = document.createElement('style');
-  styleElement.innerHTML = styles;
-  document.head.appendChild(styleElement);
-}
 
 export default LogoScroll; 

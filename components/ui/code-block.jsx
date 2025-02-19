@@ -15,6 +15,16 @@ export const CodeBlock = ({
 
   const tabsExist = tabs.length > 0;
 
+  React.useEffect(() => {
+    const styleElement = document.createElement('style');
+    styleElement.innerHTML = styles;
+    document.head.appendChild(styleElement);
+
+    return () => {
+      styleElement.remove();
+    };
+  }, []);
+
   const copyToClipboard = async () => {
     const textToCopy = tabsExist ? tabs[activeTab].code : code;
     if (textToCopy) {
@@ -168,10 +178,3 @@ const styles = `
     }
   </style>
 `;
-
-// Add the styles to the document
-if (typeof document !== 'undefined') {
-  const styleElement = document.createElement('style');
-  styleElement.innerHTML = styles;
-  document.head.appendChild(styleElement);
-}
