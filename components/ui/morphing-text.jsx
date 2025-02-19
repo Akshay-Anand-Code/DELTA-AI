@@ -6,6 +6,14 @@ import { cn } from "@/lib/utils";
 const morphTime = 1.5;
 const cooldownTime = 0.5;
 
+// Move SVG values to a constant to avoid serialization issues
+const MATRIX_VALUES = [
+  "1 0 0 0 0",
+  "0 1 0 0 0",
+  "0 0 1 0 0",
+  "0 0 0 255 -140"
+].join("\n");
+
 const useMorphingText = (texts) => {
   const textIndexRef = useRef(0);
   const morphRef = useRef(0);
@@ -115,10 +123,8 @@ const SvgFilters = () => {
           <feColorMatrix
             in="SourceGraphic"
             type="matrix"
-            values={`1 0 0 0 0
-                    0 1 0 0 0
-                    0 0 1 0 0
-                    0 0 0 255 -140`} />
+            values={MATRIX_VALUES}
+          />
         </filter>
       </defs>
     </svg>
@@ -126,14 +132,22 @@ const SvgFilters = () => {
 };
 
 const MorphingText = ({ texts, className }) => {
-  const [isMounted, setIsMounted] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
+    setIsClient(true);
   }, []);
 
-  if (!isMounted) {
-    return null; // or return a placeholder/skeleton
+  // Return a placeholder with matching dimensions during SSR
+  if (!isClient) {
+    return (
+      <div
+        className={cn(
+          "relative mx-auto h-16 w-full max-w-screen-md text-center font-sans text-[40pt] font-bold leading-none md:h-24 lg:text-[3.5rem]",
+          className
+        )}
+      />
+    );
   }
 
   return (
