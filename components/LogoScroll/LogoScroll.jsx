@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import styles from './LogoScroll.module.css';
 
@@ -15,16 +15,6 @@ const LogoScroll = () => {
   // Duplicate the logos array multiple times to ensure smooth scrolling
   const duplicatedLogos = [...logos, ...logos, ...logos];
 
-  useEffect(() => {
-    const styleElement = document.createElement('style');
-    styleElement.innerHTML = styles;
-    document.head.appendChild(styleElement);
-
-    return () => {
-      styleElement.remove();
-    };
-  }, []);
-
   return (
     <div className="relative w-full py-4">
       <h4 className="text-[#46464c] font-inter font-semibold sm:text-base xss:text-sm text-center mb-4">
@@ -33,7 +23,7 @@ const LogoScroll = () => {
       
       {/* Container with max width and center alignment */}
       <div className="max-w-[800px] mx-auto relative mb-4">
-        <div className="relative overflow-hidden mask-edges">
+        <div className={`relative overflow-hidden ${styles.maskEdges}`}>
           {/* Enhanced gradient overlays */}
           <div className="absolute left-0 top-0 w-[200px] h-full bg-gradient-to-r from-black via-black to-transparent z-10 blur-[2px]"></div>
           <div className="absolute right-0 top-0 w-[200px] h-full bg-gradient-to-l from-black via-black to-transparent z-10 blur-[2px]"></div>

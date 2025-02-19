@@ -1,0 +1,68 @@
+.codeBlockContainer {
+  position: relative !important;
+  width: 100% !important;
+  border-radius: 0.5rem !important;
+  background-color: #2a2a2a !important;
+  padding: 1rem !important;
+  font-family: monospace !important;
+  font-size: 0.875rem !important;
+}
+
+.codeBlockHeader {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+}
+
+.codeBlockTabs {
+  display: flex !important;
+  overflow-x: auto !important;
+}
+
+.codeBlockTab {
+  padding: 0.5rem 0.75rem !important;
+  font-size: 0.75rem !important;
+  transition: color 0.3s !important;
+  font-family: sans-serif !important;
+}
+
+.codeBlockTab:not(.active) {
+  color: #a1a1aa !important;
+}
+
+.codeBlockTab:not(.active):hover {
+  color: #e4e4e7 !important;
+}
+
+.codeBlockTab.active {
+  color: white !important;
+}
+
+.codeBlockFilename {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 0.5rem 0 !important;
+}
+
+.filename {
+  font-size: 0.75rem !important;
+  color: #a1a1aa !important;
+}
+
+.copyButton {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.25rem !important;
+  font-size: 0.75rem !important;
+  color: #a1a1aa !important;
+  transition: color 0.3s !important;
+  font-family: sans-serif !important;
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+}
+
+.copyButton:hover {
+  color: #e4e4e7 !important;
+} 
