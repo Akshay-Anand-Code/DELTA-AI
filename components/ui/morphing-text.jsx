@@ -1,5 +1,5 @@
-"use client";;
-import { useCallback, useEffect, useRef } from "react";
+"use client";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -96,34 +96,56 @@ const Texts = ({ texts }) => {
   </>);
 };
 
-const SvgFilters = () => (
-  <svg
-    id="filters"
-    className="fixed h-0 w-0"
-    preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <filter id="threshold">
-        <feColorMatrix
-          in="SourceGraphic"
-          type="matrix"
-          values="1 0 0 0 0
-                  0 1 0 0 0
-                  0 0 1 0 0
-                  0 0 0 255 -140" />
-      </filter>
-    </defs>
-  </svg>
-);
+const SvgFilters = () => {
+  const [isMounted, setIsMounted] = useState(false);
 
-const MorphingText = ({ texts, className }) => (
-  <div
-    className={cn(
-      "relative mx-auto h-16 w-full max-w-screen-md text-center font-sans text-[40pt] font-bold leading-none [filter:url(#threshold)_blur(0.6px)] md:h-24 lg:text-[3.5rem]",
-      className
-    )}>
-    <Texts texts={texts} />
-    <SvgFilters />
-  </div>
-);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return null;
+
+  return (
+    <svg
+      id="filters"
+      className="fixed h-0 w-0"
+      preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <filter id="threshold">
+          <feColorMatrix
+            in="SourceGraphic"
+            type="matrix"
+            values={`1 0 0 0 0
+                    0 1 0 0 0
+                    0 0 1 0 0
+                    0 0 0 255 -140`} />
+        </filter>
+      </defs>
+    </svg>
+  );
+};
+
+const MorphingText = ({ texts, className }) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null; // or return a placeholder/skeleton
+  }
+
+  return (
+    <div
+      className={cn(
+        "relative mx-auto h-16 w-full max-w-screen-md text-center font-sans text-[40pt] font-bold leading-none [filter:url(#threshold)_blur(0.6px)] md:h-24 lg:text-[3.5rem]",
+        className
+      )}>
+      <Texts texts={texts} />
+      <SvgFilters />
+    </div>
+  );
+};
 
 export default MorphingText;
