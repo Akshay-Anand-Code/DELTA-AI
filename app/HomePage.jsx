@@ -17,24 +17,18 @@ import Questions from "../components/Questions/Questions";
 import Footer from "../components/Footer/Footer";
 // import { RainbowButton } from "../components/ui/rainbow-button";
 const BackgroundBeams = dynamic(
-  () =>
-    import("../components/ui/background-beams").then(
-      (mod) => mod.BackgroundBeams
-    ),
-  {
-    ssr: false,
-    loading: () => <div></div>,
-  }
+  () => import("../components/ui/background-beams").then((mod) => mod.BackgroundBeams),
+  { ssr: false }
 );
-const MorphingText = dynamic(() => import("../components/ui/morphing-text"), {
-  ssr: false,
-  loading: () => <div></div>,
-});
+const MorphingText = dynamic(
+  () => import("../components/ui/morphing-text"),
+  { ssr: false }
+);
 import LogoScroll from "../components/LogoScroll/LogoScroll";
-const Particles = dynamic(() => import("../components/ui/particles"), {
-  ssr: false,
-  loading: () => <div></div>,
-});
+const Particles = dynamic(
+  () => import("../components/ui/particles"),
+  { ssr: false }
+);
 
 export function HomePage() {
   const { resolvedTheme } = useTheme();
@@ -49,14 +43,20 @@ export function HomePage() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-
-      // Register the ScrollTrigger plugin
       gsap.registerPlugin(ScrollTrigger);
-      const section = sectionRef.current;
-      const h2 = section.querySelector("h2");
-      const h4 = section.querySelector("h4");
+      
+      if (
+        sectionRef.current &&
+        gridRef.current &&
+        headerRef.current &&
+        featuresRef.current &&
+        faqRef.current &&
+        ctaRef.current
+      ) {
+        const section = sectionRef.current;
+        const h2 = section.querySelector("h2");
+        const h4 = section.querySelector("h4");
 
-      if (gridRef.current && headerRef.current && featuresRef.current && faqRef.current && ctaRef.current) {
         const gridItems = Array.from(gridRef.current.children);
         const featureElements = featuresRef.current.querySelectorAll(
           "h2, h4, img, .animation-container"
@@ -64,7 +64,6 @@ export function HomePage() {
         const faqElements = faqRef.current.querySelectorAll("h2, .faq-item");
         const ctaElements = ctaRef.current.querySelectorAll('h3, p, button');
 
-        // Animate header
         gsap.fromTo(
           headerRef.current,
           { opacity: 0, y: 20 },
@@ -82,112 +81,119 @@ export function HomePage() {
           }
         );
 
-        gsap.fromTo(
-          [h2, h4],
-          { opacity: 0, y: 50 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power2.out",
-            stagger: 0.2,
-            scrollTrigger: {
-              trigger: section,
-              start: "top bottom-=100",
-              end: "bottom top+=100",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-
-        gsap.fromTo(
-          ctaElements,
-          { 
-            opacity: 0, 
-            y: 50 
-          },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.2,
-            scrollTrigger: {
-              trigger: ctaRef.current,
-              start: 'top 80%',
-              end: 'bottom 20%',
-              toggleActions: 'play none none reverse'
-            }
-          }
-        );
-
-        // Animate grid items
-        gridItems.forEach((item, index) => {
+        if (h2 && h4) {
           gsap.fromTo(
-            item,
-            { opacity: 0, y: 20 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              ease: "power2.out",
-              delay: index * 0.125,
-              scrollTrigger: {
-                trigger: gridRef.current,
-                start: "top bottom-=100",
-                end: "bottom top+=100",
-                toggleActions: "play none none reverse",
-              },
-            }
-          );
-        });
-
-        // Animate feature elements
-        featureElements.forEach((element, index) => {
-          const totalElements = featureElements.length;
-          const delay = index < totalElements - 4 ? index * 0.1 : 0;
-
-          gsap.fromTo(
-            element,
+            [h2, h4],
             { opacity: 0, y: 50 },
             {
               opacity: 1,
               y: 0,
               duration: 0.8,
               ease: "power2.out",
-              delay: delay,
+              stagger: 0.2,
               scrollTrigger: {
-                trigger: element,
-                start: "top bottom",
-                end: "bottom top",
+                trigger: section,
+                start: "top bottom-=100",
+                end: "bottom top+=100",
                 toggleActions: "play none none reverse",
-                once: true,
               },
             }
           );
-        });
+        }
 
-        // Animate FAQ elements
-        gsap.fromTo(
-          faqElements,
-          { opacity: 0, y: 50 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power2.out",
-            stagger: 0.1,
-            scrollTrigger: {
-              trigger: faqRef.current,
-              start: "top bottom-=100",
-              end: "bottom top+=100",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
+        if (gridItems.length > 0) {
+          gridItems.forEach((item, index) => {
+            gsap.fromTo(
+              item,
+              { opacity: 0, y: 20 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                ease: "power2.out",
+                delay: index * 0.125,
+                scrollTrigger: {
+                  trigger: gridRef.current,
+                  start: "top bottom-=100",
+                  end: "bottom top+=100",
+                  toggleActions: "play none none reverse",
+                },
+              }
+            );
+          });
+        }
+
+        if (featureElements.length > 0) {
+          featureElements.forEach((element, index) => {
+            const totalElements = featureElements.length;
+            const delay = index < totalElements - 4 ? index * 0.1 : 0;
+
+            gsap.fromTo(
+              element,
+              { opacity: 0, y: 50 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power2.out",
+                delay: delay,
+                scrollTrigger: {
+                  trigger: element,
+                  start: "top bottom",
+                  end: "bottom top",
+                  toggleActions: "play none none reverse",
+                  once: true,
+                },
+              }
+            );
+          });
+        }
+
+        if (faqElements.length > 0) {
+          gsap.fromTo(
+            faqElements,
+            { opacity: 0, y: 50 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "power2.out",
+              stagger: 0.1,
+              scrollTrigger: {
+                trigger: faqRef.current,
+                start: "top bottom-=100",
+                end: "bottom top+=100",
+                toggleActions: "play none none reverse",
+              },
+            }
+          );
+        }
+
+        if (ctaElements.length > 0) {
+          gsap.fromTo(
+            ctaElements,
+            { opacity: 0, y: 50 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              stagger: 0.2,
+              scrollTrigger: {
+                trigger: ctaRef.current,
+                start: 'top 80%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        }
       }
     }
+
     return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+      if (typeof window !== 'undefined') {
+        ScrollTrigger.getAll().forEach((t) => t.kill());
+      }
     };
   }, []);
 
@@ -266,7 +272,7 @@ export function HomePage() {
                   backgroundPosition: "center",
                   backgroundSize: "contain",
                   filter: "drop-shadow(0 0 10.5em rgba(233, 140, 0, 0.4))",
-                  "@media screen and (-moz-images-in-menus:0)": {
+                  '@media (min-width: 768px)': {
                     filter: "drop-shadow(0 0 10.5em rgba(233, 140, 0, 0.6))"
                   }
                 }}
