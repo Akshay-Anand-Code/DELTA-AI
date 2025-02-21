@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 
 const ModelDropdown = ({
   selectedModel,
@@ -84,6 +85,7 @@ const Input = ({
   isGenerating,
   isWebActive,
   handleSetWebActive,
+  isAuthorized,
 }) => {
   const [message, setMessage] = useState("");
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -141,75 +143,89 @@ const Input = ({
   }, [message]);
 
   return (
-    <div className="w-full px-4 pb-4 shadow-lg bg-gradient-to-t from-[#121212] to-transparent">
-      <div className="max-w-4xl mx-auto relative">
-        <form
-          ref={formRef}
-          onSubmit={handleSubmit}
-          className="relative flex flex-col bg-[#212121] rounded-xl shadow-lg border border-[#383838]"
-        >
-          <div className="flex items-end">
-            <textarea
-              ref={textareaRef}
-              className="w-full resize-none bg-transparent pl-4 pr-1 sm:text-base text-sm py-4 min-h-[56px] max-h-[200px]
-                  text-[#e2e2e2] placeholder-[#8e8e8e] focus:outline-none 
-                  scrollbar-thin scrollbar-thumb-[#383838] scrollbar-track-transparent
-                  overflow-y-auto"
-              placeholder="Message Zenos AI..."
-              rows={1}
-              value={message}
-              onChange={handleMessageChange}
-              onKeyDown={handleKeyDown}
-            />
-            <button
-              type="submit"
-              className="sm:min-w-8 sm:min-h-8 min-w-8 min-h-8 flex items-center justify-center rounded-full my-auto mr-2 
-                bg-[#dddddd] hover:bg-gray-100 transition-colors duration-200 ease-in-out 
-                disabled:opacity-40 disabled:cursor-not-allowed"
-              disabled={!message.trim() || isGenerating}
+    <div className="relative px-4 py-2 bg-[#121212] border-t border-[#383838]">
+      {!isAuthorized ? (
+        <div className="flex items-center justify-center py-4">
+          <Link 
+            href="/login"
+            className="px-6 py-2 bg-[#2c2c2c] hover:bg-[#383838] text-[#e2e2e2] rounded-lg transition-all flex items-center space-x-2"
+          >
+            <i className="ri-login-box-line"></i>
+            <span>Login to Start Chatting</span>
+          </Link>
+        </div>
+      ) : (
+        <div className="w-full px-4 pb-4 shadow-lg bg-gradient-to-t from-[#121212] to-transparent">
+          <div className="max-w-4xl mx-auto relative">
+            <form
+              ref={formRef}
+              onSubmit={handleSubmit}
+              className="relative flex flex-col bg-[#212121] rounded-xl shadow-lg border border-[#383838]"
             >
-              <i className="ri-arrow-up-line text-xl text-[#000000]"></i>
-            </button>
-          </div>
+              <div className="flex items-end">
+                <textarea
+                  ref={textareaRef}
+                  className="w-full resize-none bg-transparent pl-4 pr-1 sm:text-base text-sm py-4 min-h-[56px] max-h-[200px]
+                      text-[#e2e2e2] placeholder-[#8e8e8e] focus:outline-none 
+                      scrollbar-thin scrollbar-thumb-[#383838] scrollbar-track-transparent
+                      overflow-y-auto"
+                  placeholder="Message Zenos AI..."
+                  rows={1}
+                  value={message}
+                  onChange={handleMessageChange}
+                  onKeyDown={handleKeyDown}
+                />
+                <button
+                  type="submit"
+                  className="sm:min-w-8 sm:min-h-8 min-w-8 min-h-8 flex items-center justify-center rounded-full my-auto mr-2 
+                    bg-[#dddddd] hover:bg-gray-100 transition-colors duration-200 ease-in-out 
+                    disabled:opacity-40 disabled:cursor-not-allowed"
+                  disabled={!message.trim() || isGenerating}
+                >
+                  <i className="ri-arrow-up-line text-xl text-[#000000]"></i>
+                </button>
+              </div>
 
-          <div className="flex items-center px-4 py-2 border-t border-[#383838] sm:space-x-8 space-x-4">
-            <div className="flex items-center sm:space-x-4 space-x-4 z-10">
-              <button
-                type="button"
-                onClick={() => handleSetWebActive()}
-                className="text-[#8e8e8e] transition-all duration-200"
-              >
-                <i className={`ri-attachment-2 text-[1.4rem]`}></i>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleSetWebActive()}
-                className="text-[#8e8e8e] transition-all duration-200"
-              >
-                <i className={`ri-global-line ${isWebActive ? "text-blue-500" : ""} transition-all ease-in-out text-[1.4rem]`}></i>
-              </button>
-            </div>
-            <div className="flex items-center sm:space-x-4 space-x-2">
-              <ModelDropdown
-                selectedModel={selectedModel}
-                setSelectedModel={setSelectedModel}
-                models={models}
-                isOpen={openDropdown === "model"}
-                what="Model"
-                onToggle={handleDropdownToggle("model")}
-              />
-              <ModelDropdown
-                selectedModel={selectedProvider}
-                setSelectedModel={setSelectedProvider}
-                models={models[selectedModel]?.providers || {}}
-                isOpen={openDropdown === "provider"}
-                what="Provider"
-                onToggle={handleDropdownToggle("provider")}
-              />
-            </div>
+              <div className="flex items-center px-4 py-2 border-t border-[#383838] sm:space-x-8 space-x-4">
+                <div className="flex items-center sm:space-x-4 space-x-4 z-10">
+                  <button
+                    type="button"
+                    onClick={() => handleSetWebActive()}
+                    className="text-[#8e8e8e] transition-all duration-200"
+                  >
+                    <i className={`ri-attachment-2 text-[1.4rem]`}></i>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleSetWebActive()}
+                    className="text-[#8e8e8e] transition-all duration-200"
+                  >
+                    <i className={`ri-global-line ${isWebActive ? "text-blue-500" : ""} transition-all ease-in-out text-[1.4rem]`}></i>
+                  </button>
+                </div>
+                <div className="flex items-center sm:space-x-4 space-x-2">
+                  <ModelDropdown
+                    selectedModel={selectedModel}
+                    setSelectedModel={setSelectedModel}
+                    models={models}
+                    isOpen={openDropdown === "model"}
+                    what="Model"
+                    onToggle={handleDropdownToggle("model")}
+                  />
+                  <ModelDropdown
+                    selectedModel={selectedProvider}
+                    setSelectedModel={setSelectedProvider}
+                    models={models[selectedModel]?.providers || {}}
+                    isOpen={openDropdown === "provider"}
+                    what="Provider"
+                    onToggle={handleDropdownToggle("provider")}
+                  />
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -210,39 +210,44 @@ const Page = () => {
   useEffect(() => {
     const verifyTokenAndFetchChats = async () => {
       const token = Cookies.get("token");
-      if (token) {
-        try {
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/verify`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ token }),
-            }
-          );
-          const data = await response.json();
-          if (data.valid) {
-            setUserId(data.userId);
-            setUserData({
-              avatar: data.avatar,
-              email: data.email,
-              username: data.username,
-            });
+      if (!token) {
+        // Instead of redirecting, set a guest state
+        setUserId(null);
+        setUserData({});
+        return;
+      }
 
-            await fetchAndCategorizeChats(data.userId);
-          } else {
-            Cookies.remove("token");
-            window.location.href = "/login";
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/verify`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token }),
           }
-        } catch (error) {
-          console.error("Error verifying token:", error);
+        );
+        const data = await response.json();
+        if (data.valid) {
+          setUserId(data.userId);
+          setUserData({
+            avatar: data.avatar,
+            email: data.email,
+            username: data.username,
+          });
+
+          await fetchAndCategorizeChats(data.userId);
+        } else {
           Cookies.remove("token");
-          window.location.href = "/login";
+          setUserId(null);
+          setUserData({});
         }
-      } else {
-        window.location.href = "/login";
+      } catch (error) {
+        console.error("Error verifying token:", error);
+        Cookies.remove("token");
+        setUserId(null);
+        setUserData({});
       }
     };
 
@@ -364,11 +369,20 @@ const Page = () => {
     }
   };
 
+  const handleUnauthorizedAction = () => {
+    router.push('/login');
+    toast.error("Please login to start chatting", { position: "top-right" });
+  };
+
   const handleSendMessage = async (
     message,
     selectedModel,
     selectedProvider
   ) => {
+    if (!userId) {
+      handleUnauthorizedAction();
+      return;
+    }
     setIsGenerating(true);
     startTimer();
 
@@ -639,28 +653,40 @@ const Page = () => {
           </div>
         </div>
         <div className="h-[6rem] flex items-center justify-between px-2 py-1.5 border-t border-[#414141]">
-          <div className="flex-1 px-2 py-1.5 rounded-xl hover:bg-[#2c2c2c] transition-all cursor-pointer">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-full overflow-hidden">
-                  <img
-                    src={userData.avatar}
-                    alt="Profile"
-                    className="w-full h-full object-cover"
-                  />
+          {userId ? (
+            <div className="flex-1 px-2 py-1.5 rounded-xl hover:bg-[#2c2c2c] transition-all cursor-pointer">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-full overflow-hidden">
+                    <img
+                      src={userData.avatar}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="text-[#e2e2e2] font-semibold text-sm">
+                      {userData.username}
+                    </h3>
+                    <h5 className="text-[#8e8e8e] text-xs">{userData.email}</h5>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-[#e2e2e2] font-semibold text-sm">
-                    {userData.username}
-                  </h3>
-                  <h5 className="text-[#8e8e8e] text-xs">{userData.email}</h5>
-                </div>
+                <button className="text-[#8e8e8e] hover:text-[#e2e2e2] transition-colors">
+                  <i className="ri-settings-3-line text-xl"></i>
+                </button>
               </div>
-              <button className="text-[#8e8e8e] hover:text-[#e2e2e2] transition-colors">
-                <i className="ri-settings-3-line text-xl"></i>
+            </div>
+          ) : (
+            <div className="flex-1 px-2">
+              <button
+                onClick={() => router.push('/login')}
+                className="w-full py-2 bg-[#2c2c2c] hover:bg-[#383838] text-[#e2e2e2] rounded-lg transition-all flex items-center justify-center space-x-2"
+              >
+                <i className="ri-login-box-line"></i>
+                <span>Login to Chat</span>
               </button>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -935,6 +961,7 @@ const Page = () => {
               handleStopGeneration={handleStopGeneration}
               isWebActive={isWebActive}
               handleSetWebActive={handleSetWebActive}
+              isAuthorized={!!userId}
             />
           </div>
         </div>
