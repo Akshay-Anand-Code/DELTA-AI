@@ -698,7 +698,7 @@ const Page = () => {
             <i className="ri-menu-line text-2xl"></i>
           </button>
           <h1 className="font-semibold text-[#c69326] font-mono text-xl">
-            Zenos AI
+            Delta Vision
           </h1>
           <button className="text-white p-2">
             <i className="ri-chat-new-line text-2xl"></i>
