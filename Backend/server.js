@@ -9,11 +9,6 @@ config();
 
 import { ChatBot } from "./routes/response.js";
 import { ImageBot } from "./routes/image.js";
-import googleLoginRoute from "./routes/googleLogin.js";
-import verifyRoute from "./routes/verify.js";
-import discordLoginRoute from "./routes/discordLogin.js";
-import registerRoute from "./routes/register.js";
-import loginRoute from "./routes/login.js";
 import chatRoute from "./routes/chat.js";
 import messageRoute from "./routes/message.js";
 import fetchChatsRoute from "./routes/fetchChats.js";
@@ -43,11 +38,6 @@ const io = new Server(server, {
 // Set up routes, passing io to the ones that need it
 app.get("/", (c) => c.text("Hello World!"));
 // app.route('/api/response', responseRoute)
-app.route("/api/googleauth", googleLoginRoute);
-app.route("/api/verify", verifyRoute);
-app.route("/api/discordauth", discordLoginRoute);
-app.route("/api/register", registerRoute);
-app.route("/api/login", loginRoute);
 app.route("/api/chat", chatRoute(io)); // Pass io to chatRoute
 app.route("/api/message", messageRoute);
 app.route("/api/fetchchats", fetchChatsRoute);

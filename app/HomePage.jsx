@@ -231,7 +231,7 @@ export function HomePage() {
             <div className="hero-animate hero-animate-delay-3 mx-auto mt-6 space-x-5 font-inter font-medium">
               <Link href="/register">
                 <button className="md:px-6 md:py-[0.5rem] xs:px-3.5 xs:py-1.5 xss:px-3 hover:scale-[1.025] xss:py-1.5 items-center text-black xss:text-[1rem] bg-[#efefef] hover:bg-[#fdfdfd] transition-all ease-in-out rounded-md ">
-                  Get Started for free
+                  Coming Soon
                 </button>
               </Link>
               <Link href="/register">
