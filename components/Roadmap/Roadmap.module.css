@@ -1,0 +1,24 @@
+.roadmapCard {
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.roadmapCard:hover {
+  transform: translateZ(20px);
+}
+
+.glowEffect {
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #00ffff, #00ff00);
+  filter: blur(15px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+  border-radius: inherit;
+}
+
+.roadmapCard:hover .glowEffect {
+  opacity: 0.15;
+} 

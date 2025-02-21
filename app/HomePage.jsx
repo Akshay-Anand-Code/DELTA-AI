@@ -16,6 +16,7 @@ import light from "../public/car.json";
 import Questions from "../components/Questions/Questions";
 import Footer from "../components/Footer/Footer";
 // import { RainbowButton } from "../components/ui/rainbow-button";
+import Roadmap from "../components/Roadmap/Roadmap";
 const BackgroundBeams = dynamic(
   () => import("../components/ui/background-beams").then((mod) => mod.BackgroundBeams),
   { ssr: false }
@@ -259,6 +260,8 @@ export function HomePage() {
             <LogoScroll />
           </div>
 
+          <Roadmap />
+
           <div
             ref={featuresRef}
             className="flex justify-center mt-16 z-50 overflow-hidden"
@@ -434,7 +437,7 @@ export function HomePage() {
             className="text-center font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 dark:from-neutral-950 to-neutral-200 dark:to-neutral-800 w-full overflow-hidden whitespace-nowrap"
             style={{ fontSize: "min(10vw)" }}
           >
-           CHASKA
+           DELTA VISION
           </p>
         </div>
         <Particles

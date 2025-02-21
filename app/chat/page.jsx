@@ -590,11 +590,11 @@ const Page = () => {
               ></i>
             </button>
             <div className="flex items-center">
-              <img src="/logo.png" alt="CHASKA Logo" className="sm:h-9 sm:w-9 xss:h-4 xss:w-5 rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm" />
+              <img src="/logo.png" alt="DELTA VISION Logo" className="sm:h-9 sm:w-9 xss:h-4 xss:w-5 rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm" />
               <h1
                 className={`font-semibold hidden md:block  px-2.5 font-inter text-xl`}
               >
-                CHASKA
+                DELTA VISION
               </h1>
             </div>
           </div>
