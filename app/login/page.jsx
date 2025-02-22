@@ -138,15 +138,6 @@ const page = () => {
     }
   };
 
-  const handleDiscordLogin = () => {
-    const CLIENT_ID = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
-    const REDIRECT_URI = `${process.env.NEXT_PUBLIC_BASE_URL}/discord-callback`;
-    const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(
-      REDIRECT_URI
-    )}&response_type=token&scope=identify%20email`;
-    window.location.href = authUrl;
-  };
-
   const googleLogin = useGoogleLogin({
     onSuccess: async (response) => {
       try {
@@ -221,13 +212,6 @@ const page = () => {
           >
             <img src="google.svg" className="w-[1.7rem]" alt="" />
             Sign in with Google
-          </button>
-          <button
-            onClick={() => handleDiscordLogin()}
-            className="border border-[#acacac] hover:border-white hover:scale-[1.02] ease-in-out gap-2 flex items-center justify-center text-white font-inter w-full font-medium py-2.5 px-4 rounded-full transition duration-300"
-          >
-            <img src="discord.svg" className="w-[1.7rem]" alt="" />
-            Sign in with Discord
           </button>
         </div>
         <div className="flex items-center w-[80%] mx-auto my-4">
