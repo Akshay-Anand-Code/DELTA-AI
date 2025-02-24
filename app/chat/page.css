@@ -47,6 +47,21 @@
 
 .message-container {
   white-space: pre-line;
+  position: relative;
+  z-index: 1;
+}
+
+.message-container code {
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(74, 158, 255, 0.1);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  color: #4a9eff;
+}
+
+.message-container pre {
+  background: rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid #383838;
 }
 
 /* Additional styles */
@@ -286,4 +301,28 @@ body {
 
 .copy-button i {
   margin-right: 0.25rem;
+}
+
+/* Add a subtle scan line effect */
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.message-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(74, 158, 255, 0.025) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: -1;
 }

@@ -15,6 +15,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { Toaster, toast } from "sonner";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import dynamic from "next/dynamic";
+import { cn } from "@/lib/utils";
 
 const Particles = dynamic(
   () => import("../../components/ui/particles"),
@@ -721,45 +722,34 @@ const Page = () => {
           >
             <div className="flex flex-col h-max pt-20 w-full rounded-lg pb-20">
               <section className="flex max-w-4xl mx-auto flex-col w-full gap-6">
-                {/* User message */}
-                <div className="animate-in slide-in-from-bottom-5 duration-300 ease-out relative max-w-[95%] md:max-w-[85%] rounded-lg transition-all mr-auto">
-                  <div className="bg-gradient-to-br from-[#2a2a2a] to-[#1e1e1e] rounded-lg shadow-lg overflow-hidden border border-[#3a3a3a]">
-                    {/* Model information */}
-                    <div className="bg-gradient-to-r from-[#2a2a2a] to-[#252525] text-[#8e8e8e] text-xs font-medium py-2 px-4 flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <i className="ri-ai-generate text-[#c69326] text-lg"></i>
-                        <span className="text-[#a0a0a0] font-semibold">
-                          GPT-4o
-                        </span>
-                        <span className="text-[#8e8e8e] text-xs">
-                          with Pollinations AI
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        {/* <span className="text-[#8e8e8e] text-xs sm:block hidden">
-                          Tokens: 9
-                        </span> */}
-                        <span className="text-[#8e8e8e] text-xs">
-                          Time: 0.7s
-                        </span>
-                      </div>
+                {/* Welcome message */}
+                <div className="animate-in slide-in-from-bottom-5 duration-300 ease-out relative max-w-[95%] md:max-w-[85%] border border-[#383838] rounded-lg transition-all mr-auto bg-[#1e1e1e] shadow-lg overflow-hidden">
+                  <div className="bg-gradient-to-r from-[#2a2a2a] to-[#252525] text-[#8e8e8e] text-xs font-medium py-2 px-4 flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <i className="ri-ai-generate text-[#4a9eff] text-lg"></i>
+                      <span className="text-[#a0a0a0] font-medium">System</span>
                     </div>
-
-                    {/* Response content */}
-                    <div className="p-4 bg-gradient-to-b from-[#212121] to-[#1a1a1a]">
-                      <div className="space-y-2 message-container">
-                        <div className="text-sm font-inter md:text-base text-[#e2e2e2] leading-relaxed">
-                          Hello{" "}
-                          {userData && userData.username
-                            ? userData.username
-                                .split(" ")[0]
-                                .charAt(0)
-                                .toUpperCase() +
-                              userData.username.split(" ")[0].slice(1)
-                            : "there"}
-                          ! How can I assist you today?
-                        </div>
-                      </div>
+                    <div className="flex items-center space-x-1">
+                      <div className="w-2 h-2 rounded-full bg-[#ff605c]"></div>
+                      <div className="w-2 h-2 rounded-full bg-[#ffbd44]"></div>
+                      <div className="w-2 h-2 rounded-full bg-[#00ca4e]"></div>
+                    </div>
+                  </div>
+                  <div className="p-4 bg-gradient-to-b from-[#1e1e1e] to-[#181818]">
+                    <div className="space-y-2">
+                      <p className={cn(
+                        "text-sm font-mono md:text-base text-[#e6e6e6]",
+                        "before:content-['$'] before:text-[#4a9eff] before:mr-2"
+                      )}>
+                        Hello{" "}
+                        {userData && userData.username
+                          ? userData.username
+                              .split(" ")[0]
+                              .charAt(0)
+                              .toUpperCase() +
+                            userData.username.split(" ")[0].slice(1)
+                          : "there"}! How can I assist you today?
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -776,9 +766,9 @@ const Page = () => {
                       </div>
                     ) : (
                       <div className="animate-in slide-in-from-bottom-5 duration-300 ease-out relative max-w-[92vw] md:max-w-[85%] rounded-lg transition-all mr-auto sm:min-w-[350px]">
-                        <div className="bg-gradient-to-br from-[#2a2a2a] to-[#1e1e1e] rounded-lg shadow-lg overflow-hidden border border-[#3a3a3a]">
-                          {/* Model information */}
-                          <div className="bg-gradient-to-r from-[#2a2a2a] to-[#252525] text-[#8e8e8e] text-xs font-medium py-2 px-4 flex items-center justify-between">
+                        <div className="bg-gradient-to-br from-[#1c1c1c] to-[#151515] rounded-lg shadow-lg overflow-hidden border border-[#383838] relative">
+                          <div className="absolute inset-0 bg-[url('/matrix-grid.png')] opacity-[0.02] pointer-events-none"></div>
+                          <div className="bg-gradient-to-r from-[#202020] to-[#181818] text-[#8e8e8e] border-b border-[#383838]">
                             <div className="flex items-center space-x-2">
                               {messageMetadata[index] ? (
                                 <>
@@ -811,19 +801,15 @@ const Page = () => {
                               )}
                             </div>
                             <div className="flex items-center space-x-2">
-                              {/* <span className="text-[#8e8e8e] text-xs sm:block hidden">
-                                Tokens: 150
-                              </span> */}
                               <span className="text-[#8e8e8e] text-xs">
                                 Time: {timeMetaData[index]}s
                               </span>
                             </div>
                           </div>
-
-                          {/* Response content */}
-                          <div className="p-4 bg-gradient-to-b from-[#212121] to-[#1a1a1a]">
-                            <div className="space-y-2 message-container">
-                              <div className="text-sm font-inter md:text-base text-[#e2e2e2] leading-relaxed">
+                          <div className="p-4 bg-gradient-to-b from-[#181818] to-[#151515] relative">
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(74,158,255,0.1),transparent_70%)]"></div>
+                            <div className="space-y-2 message-container relative">
+                              <div className="text-sm font-mono md:text-base text-[#e2e2e2] leading-relaxed">
                                 {message.content.trim().length === 0 ||
                                 message.content == undefined ? (
                                   <span className="text-[#ef4444]">
@@ -885,7 +871,7 @@ const Page = () => {
                     {message.role === "assistant" && (
                       <button
                         onClick={() => handleCopy(index)}
-                        className="animate-in group cursor-pointer p-1.5 flex items-center w-fit -mt-4"
+                        className="animate-in group cursor-pointer p-1.5 flex items-center w-fit -mt-4 bg-[#202020] rounded-md border border-[#383838] hover:bg-[#252525] transition-all"
                       >
                         <i
                           className={`${
