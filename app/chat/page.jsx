@@ -14,6 +14,12 @@ import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { Toaster, toast } from "sonner";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import dynamic from "next/dynamic";
+
+const Particles = dynamic(
+  () => import("../../components/ui/particles"),
+  { ssr: false }
+);
 
 const Page = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -47,6 +53,7 @@ const Page = () => {
   const params = useParams();
   const [isToggling, setIsToggling] = useState(false);
   const [isWebActive, setIsWebActive] = useState(false);
+  const [color, setColor] = useState("#ffffff");
 
   useEffect(() => {
     const chatIdFromUrl = params?.chatId || pathname.split("/").pop();
@@ -975,6 +982,13 @@ const Page = () => {
         ></div>
       )}
       <Toaster richColors theme="dark" />
+      <Particles
+        className="absolute inset-0"
+        quantity={70}
+        ease={80}
+        color={color}
+        refresh
+      />
     </div>
   );
 };
