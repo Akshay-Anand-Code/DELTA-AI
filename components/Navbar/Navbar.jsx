@@ -2,6 +2,7 @@ import React from 'react'
 import 'remixicon/fonts/remixicon.css'
 import { RainbowButton } from "../ui/rainbow-button";
 import Link from "next/link";
+import SolanaAddressButton from "../ui/solana-address-button";
 
 const Navbar = () => {
   return (
@@ -17,7 +18,7 @@ const Navbar = () => {
       </div>
       <div className="space-x-3 font-inter font-medium">
         <Link href="https://t.me/DeltaAISolana" target='_blank' className='md:px-6 md:py-2 xs:px-3.5 xs:py-1.5 xss:px-3 xss:py-1.5 hover:scale-105 xss:text-[1rem] hover:bg-[#161616] rounded-md transition-all ease-in-out'>Telegram</Link>
-        {/* <button className='md:px-4 md:py-[0.37rem] xs:px-3.5 xs:py-1.5 xss:px-3 hover:scale-[1.025] xss:py-1.5 items-center text-black xss:text-[1rem] bg-[#efefef] hover:bg-[#fdfdfd] transition-all ease-in-out rounded-md '>Get Started</button> */}
+        <SolanaAddressButton address="KxEu6NRtr7WoNK2xc55szpCgVndW9UtKvMeK4Sipump" />
         <Link href="https://twitter.com/DeltaAISolana" target='_blank'>
           <RainbowButton>Twitter</RainbowButton>
         </Link>

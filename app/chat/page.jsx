@@ -16,6 +16,7 @@ import { Toaster, toast } from "sonner";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
+import SolanaAddressButton from "../../components/ui/solana-address-button";
 
 const Particles = dynamic(
   () => import("../../components/ui/particles"),
