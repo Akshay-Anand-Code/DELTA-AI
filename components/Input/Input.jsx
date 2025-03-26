@@ -98,12 +98,15 @@ const Input = ({
   };
 
   useEffect(() => {
+    // Set GPT-4o as the default model when component mounts
+    setSelectedModel("GPT-4o");
+    
     const providers = models[selectedModel]?.providers;
     if (providers) {
       const firstProviderKey = Object.keys(providers)[0];
       setSelectedProvider(firstProviderKey);
     }
-  }, [selectedModel]);
+  }, []);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {

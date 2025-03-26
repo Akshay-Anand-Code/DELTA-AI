@@ -8,7 +8,7 @@ import queue
 class ChatBot:
     def __init__(self):
         self.conversation_history = []
-        self.default_model = "gpt-4o"
+        self.defaultModel = "gpt-4o"
         self.providers = [Provider.Blackbox, Provider.DarkAI, Provider.PollinationsAI]
 
     async def get_response(self, prompt: str) -> str:
@@ -22,7 +22,7 @@ class ChatBot:
         def provider_thread(provider):
             try:
                 response = g4f.ChatCompletion.create(
-                    model=self.default_model,
+                    model=self.defaultModel,
                     messages=messages,
                     provider=provider,
                     stream=True
