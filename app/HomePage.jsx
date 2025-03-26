@@ -381,13 +381,13 @@ export function HomePage() {
             ref={sectionRef}
             className="flex flex-col w-[100%] mt-16 relative"
           >
-            <h2 className="text-center font-inter font-medium text-[#ffffff] sm:text-5xl xs:text-4xl xss:text-4xl leading-10 relative xs:w-full xss:w-[97%] z-10">
+            {/* <h2 className="text-center font-inter font-medium text-[#ffffff] sm:text-5xl xs:text-4xl xss:text-4xl leading-10 relative xs:w-full xss:w-[97%] z-10">
               Loved by people around the world
-            </h2>
-            <h4 className="text-center font-inter font-medium text-[#cccccc] sm:text-base xss:text-sm sm:w-[60%] mt-3 xss:w-[90%] mx-auto relative z-10">
+            </h2> */}
+            {/* <h4 className="text-center font-inter font-medium text-[#cccccc] sm:text-base xss:text-sm sm:w-[60%] mt-3 xss:w-[90%] mx-auto relative z-10">
               Trusted and admired globally, our platform brings innovation to
               users everywhere.
-            </h4>
+            </h4> */}
             <Reviews />
           </div>
 

@@ -191,6 +191,10 @@ const Reviews = () => {
     });
   };
 
+  // Return null to completely hide the component
+  return null;
+  
+  /* Original return statement commented out
   return (
     <div className="container mt-14 h-[90vh] overflow-hidden mx-auto">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -230,6 +234,7 @@ const Reviews = () => {
       </div>
     </div>
   );
+  */
 };
 
 export default Reviews;
