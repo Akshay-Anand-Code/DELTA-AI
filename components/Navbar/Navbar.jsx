@@ -18,7 +18,7 @@ const Navbar = () => {
       </div>
       <div className="space-x-3 font-inter font-medium">
         <Link href="https://t.me/DeltaAISolana" target='_blank' className='md:px-6 md:py-2 xs:px-3.5 xs:py-1.5 xss:px-3 xss:py-1.5 hover:scale-105 xss:text-[1rem] hover:bg-[#161616] rounded-md transition-all ease-in-out'>Telegram</Link>
-        <SolanaAddressButton address="KxEu6NRtr7WoNK2xc55szpCgVndW9UtKvMeK4Sipump" />
+        <SolanaAddressButton address="contract address" />
         <Link href="https://twitter.com/DeltaAISolana" target='_blank'>
           <RainbowButton>Twitter</RainbowButton>
         </Link>
