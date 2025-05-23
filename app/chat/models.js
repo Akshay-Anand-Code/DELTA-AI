@@ -76,6 +76,14 @@ const models = {
       Blackbox: { display: "Blackbox", value: "Blackbox" },
     },
   },
+  "Ghibli Generator": {
+    display: "Ghibli Style",
+    value: "ghibli",
+    providers: {
+      Auto: { display: "Auto", value: "auto" },
+      "GPT-4o": { display: "GPT-4o", value: "GPT4o" },
+    },
+  },
   // "Flux Pro": {
   //   display: "Flux Pro",
   //   value: "flux-pro",

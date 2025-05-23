@@ -23,6 +23,9 @@ const Particles = dynamic(
   { ssr: false }
 );
 
+// ====== OPENAI API KEY REMOVED FROM FRONTEND ======
+// =================================================
+
 const Page = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -383,6 +386,25 @@ const Page = () => {
     toast.error("Please login to start chatting", { position: "top-right" });
   };
 
+  const fetchOpenAIChat = async (messages) => {
+    const response = await fetch("/api/openai-proxy", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "gpt-4o", // Always use OpenAI GPT-4o
+        messages: messages,
+      }),
+    });
+    const data = await response.json();
+    if (data.choices && data.choices[0] && data.choices[0].message) {
+      return data.choices[0].message.content;
+    } else {
+      throw new Error(data.error?.message || "No response from OpenAI");
+    }
+  };
+
   const handleSendMessage = async (
     message,
     selectedModel,
@@ -395,171 +417,31 @@ const Page = () => {
     setIsGenerating(true);
     startTimer();
 
-    let currentChatId = latestChatIdRef.current;
-
     setMessages((prevMessages) => [
       ...prevMessages,
       { role: "user", content: message },
     ]);
 
-    if (!currentChatId) {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/chat`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              prompt: message,
-              user_id: userId,
-            }),
-          }
-        );
-        const data = await response.json();
-        currentChatId = data.chat_id;
-        setChatId(currentChatId);
-        latestChatIdRef.current = currentChatId;
-
-        fetchAndCategorizeChats(userId);
-      } catch (error) {
-        console.error("Error creating new chat:", error);
-        setIsGenerating(false);
-        return;
-      }
-    }
-
-    let providers;
-    if (selectedProvider === "Auto") {
-      // Get all providers except "Auto" for the selected model
-      providers = Object.entries(models[selectedModel].providers)
-        .slice(1) // Skip the first entry (Auto)
-        .map(([key, value]) => value.value);
-    } else {
-      providers = [models[selectedModel].providers[selectedProvider].value];
-    }
-
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/message/${currentChatId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: {
-          index: messages.length + 1,
-          role: "user",
-          content: message,
-        },
-      }),
-    });
+    let newMessages = [
+      ...messages,
+      { role: "user", content: message },
+    ];
 
     let generatedContent = "";
-    console.log(message, models[selectedModel].value, providers);
-    socket.emit("message", {
-      message,
-      model: models[selectedModel].value,
-      provider: providers,
-      chatId: latestChatIdRef.current || "none",
-    });
+    try {
+      const assistantReply = await fetchOpenAIChat(newMessages);
+      generatedContent = assistantReply;
+    } catch (error) {
+      generatedContent = `Error: ${error.message}`;
+    }
 
-    socket.on("requestHistory", (chatIde) => {
-      const filteredMessages = messages.map(({ role, content }) => ({
-        role,
-        content,
-      }));
-
-      socket.emit("provideHistory", { history: filteredMessages });
-    });
-
-    socket.on("requestChatId", () => {
-      console.log("chatid: ", latestChatIdRef.current);
-      socket.emit("provideChatId", { chatId: latestChatIdRef.current });
-    });
-
-    socket.on("chunk", (chunk) => {
-      generatedContent += chunk;
-      setGeneratingMessage({ role: "assistant", content: generatedContent });
-      scrollToBottom();
-    });
-
-    socket.on("chatTitleUpdated", () => {
-      fetchAndCategorizeChats(userId);
-    });
-
-    socket.on("prov", (provider) => {
-      const newMessageIndex = messages.length + 1;
-      setMessageMetadata((prevMetadata) => {
-        const newMetadata = {
-          ...prevMetadata,
-          [newMessageIndex]: { model: selectedModel, provider },
-        };
-        latestMetadataRef.current = newMetadata;
-        return newMetadata;
-      });
-    });
-
-    socket.on("done", async (fullResponse) => {
-      setIsGenerating(false);
-      // console.log("Generated content:", fullResponse);
-      if (fullResponse == null) {
-        fullResponse = "";
-      }
-
-      if (fullResponse) {
-        fullResponse = fullResponse.trimEnd();
-      }
-
-      const newMessages = [
-        ...messages,
-        { role: "user", content: message },
-        { role: "assistant", content: fullResponse },
-      ];
-      setMessages(newMessages);
-      setGeneratingMessage({});
-
-      scrollToBottom();
-
-      try {
-        let currentChatId = latestChatIdRef.current;
-        let content = newMessages[newMessages.length - 1].content;
-        if (content == undefined || content.trim() === "") {
-          content = "";
-        }
-
-        const time = stopTimer();
-
-        await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/message/${currentChatId}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              message: {
-                index: newMessages.length,
-                role: newMessages[newMessages.length - 1].role,
-                content: newMessages[newMessages.length - 1].content,
-                model: latestMetadataRef.current[newMessages.length - 1]?.model,
-                provider:
-                  latestMetadataRef.current[newMessages.length - 1]?.provider,
-                timeItTook: time,
-              },
-            }),
-          }
-        );
-      } catch (error) {
-        console.error("Error storing chat or messages:", error);
-      }
-
-      socket.off("chunk");
-      socket.off("done");
-      socket.off("prov");
-      socket.off("requestHistory");
-      socket.off("requestChatId");
-      socket.off("chatTitleUpdated");
-    });
+    setIsGenerating(false);
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { role: "assistant", content: generatedContent },
+    ]);
+    setGeneratingMessage({});
+    scrollToBottom();
   };
 
   useLayoutEffect(() => {
@@ -588,6 +470,36 @@ const Page = () => {
   const toggleSidebar = () => {
     setIsToggling(true);
     setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleGhibliImageUpload = async (file) => {
+    if (!file) return null;
+    
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+      formData.append('token', Cookies.get('token'));
+      
+      // Use the direct Ghibli processing endpoint
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload/ghibli`, {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to process image');
+      }
+      
+      const data = await response.json();
+      toast.success('Image processed successfully in Ghibli style!');
+      
+      // The processed image URL is returned directly
+      return data.imageUrl;
+    } catch (error) {
+      console.error('Error processing image:', error);
+      toast.error('Failed to process image');
+      return null;
+    }
   };
 
   return (
@@ -934,6 +846,30 @@ const Page = () => {
                         </div>
                       </div>
                     </div>
+                  </div>
+                )}
+
+                {selectedModel === 'ghibli' && (
+                  <div className="p-4 bg-[#1a1a1a] rounded-lg">
+                    <h3 className="text-lg font-medium mb-2">Upload an image for Ghibli Style generation</h3>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          toast.info('Processing image in Ghibli style...', { duration: 5000 });
+                          const imageUrl = await handleGhibliImageUpload(file);
+                          if (imageUrl) {
+                            // Add the processed image directly to the chat
+                            const message = `Here's your image in Ghibli style: ![Ghibli Image](${imageUrl})`;
+                            handleSendMessage(message);
+                          }
+                        }
+                      }}
+                      className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#333] file:text-white hover:file:bg-[#444]"
+                    />
+                    <p className="text-xs text-gray-400 mt-2">Supported formats: JPG, PNG, GIF (max 10MB)</p>
                   </div>
                 )}
 
