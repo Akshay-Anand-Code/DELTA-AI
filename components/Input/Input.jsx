@@ -172,7 +172,7 @@ const Input = ({
                       text-[#e2e2e2] placeholder-[#8e8e8e] focus:outline-none 
                       scrollbar-thin scrollbar-thumb-[#383838] scrollbar-track-transparent
                       overflow-y-auto"
-                  placeholder="Message Delta Vision..."
+                  placeholder="Message Aimore..."
                   rows={1}
                   value={message}
                   onChange={handleMessageChange}

@@ -243,7 +243,7 @@ export function HomePage() {
 
             <div className="relative hero-animate hero-animate-delay-1 relativee back my-16 flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg border-2 bg-background">
               <img
-                src="https://i.imgur.com/OmNuaFU.png"
+                src="/hero.png"
                 alt="Background"
                 className="absolute inset-0 w-full h-full object-cover"
               />
@@ -437,7 +437,7 @@ export function HomePage() {
             className="text-center font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 dark:from-neutral-950 to-neutral-200 dark:to-neutral-800 w-full overflow-hidden whitespace-nowrap"
             style={{ fontSize: "min(10vw)" }}
           >
-           DELTA VISION
+           Aimore
           </p>
         </div>
         <Particles
