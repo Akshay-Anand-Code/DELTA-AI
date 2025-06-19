@@ -706,9 +706,9 @@ const Page = () => {
                                 </>
                               ) : (
                                 <>
-                                  <i className="ri-error-warning-line text-yellow-500 text-lg"></i>
-                                  <span className="text-[#a0a0a0]  font-semibold">
-                                    Error
+                                  <i className="ri-sparkling-2-line text-[#4a9eff] text-lg"></i>
+                                  <span className="text-[#a0a0a0] font-semibold">
+                                    Aimore
                                   </span>
                                 </>
                               )}
