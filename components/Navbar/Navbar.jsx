@@ -19,7 +19,7 @@ const Navbar = () => {
       <div className="space-x-3 font-inter font-medium">
         
         <SolanaAddressButton address="contract address" />
-        <Link href="https://twitter.com/AimoreSolana" target='_blank'>
+        <Link href="https://x.com/aimoretech" target='_blank'>
           <RainbowButton>Twitter</RainbowButton>
         </Link>
       </div>
