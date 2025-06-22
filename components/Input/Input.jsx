@@ -158,7 +158,7 @@ const Input = ({
           </Link>
         </div>
       ) : (
-        <div className="w-full px-4 pb-4 shadow-lg bg-gradient-to-t from-[#121212] to-transparent">
+        <div className="w-full px-4 pb-4 shadow-lg bg-[#121212]">
           <div className="max-w-4xl mx-auto relative">
             <form
               ref={formRef}
@@ -172,7 +172,7 @@ const Input = ({
                       text-[#e2e2e2] placeholder-[#8e8e8e] focus:outline-none 
                       scrollbar-thin scrollbar-thumb-[#383838] scrollbar-track-transparent
                       overflow-y-auto"
-                  placeholder="Message Aimore..."
+                  placeholder="Message SAGE..."
                   rows={1}
                   value={message}
                   onChange={handleMessageChange}

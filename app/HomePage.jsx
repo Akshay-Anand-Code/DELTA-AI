@@ -221,7 +221,7 @@ export function HomePage() {
               <ShinyText />
             </div>
             <h1 className="hero-animate hero-animate-delay-1 w-[90%] mx-auto font-semibold py-6 text-center mt-1 md:text-8xl sm:text-7xl xs:text-6xl xss:text-4xl font-inter text-white leading-none text-transparent">
-              Any AI Model in One Place for Free
+            Access Every AI Model — Totally Free
             </h1>
             <h4 className="hero-animate hero-animate-delay-2 text-center font-inter font-medium text-[#cccccc] sm:text-lg xss:text-sm sm:w-[70%] xss:w-[95%] mx-auto">
               Discover the power of AI with Free Access to ChatGPT 4o, MidJourney,
@@ -437,7 +437,7 @@ export function HomePage() {
             className="text-center font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 dark:from-neutral-950 to-neutral-200 dark:to-neutral-800 w-full overflow-hidden whitespace-nowrap"
             style={{ fontSize: "min(10vw)" }}
           >
-           Aimore
+           SAGE
           </p>
         </div>
         <Particles
